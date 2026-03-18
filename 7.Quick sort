@@ -1,0 +1,38 @@
+import random
+import time
+import matplotlib.pyplot as plt
+
+
+def quick_sort(arr):
+    if len(arr) <= 1:
+        return arr
+    else:
+        pivot = arr[0]
+        left = [x for x in arr[1:] if x <= pivot]
+        right = [x for x in arr[1:] if x > pivot]
+
+    return quick_sort(left) + [pivot] + quick_sort(right)
+
+
+sizes = [5000, 10000, 15000, 20000, 25000]
+times = []
+
+for n in sizes:
+    data = [random.randint(1, 100000) for i in range(n)]
+
+    start = time.time()
+    sorted_data = quick_sort(data)
+    end = time.time()
+
+    elapsed = end - start
+    times.append(elapsed)
+
+    print("n =", n, "Time =", elapsed)
+
+
+plt.plot(sizes, times, marker='o')
+plt.xlabel("Number of elements (n)")
+plt.ylabel("Time taken (seconds)")
+plt.title("Quick Sort Time Complexity")
+plt.grid(True)
+plt.show()
